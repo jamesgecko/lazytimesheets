@@ -55,10 +55,10 @@ def fetch_toggl(token, workspace_id, since, until):
 def parse_pivotal(pivotal_json, stories):
     total_points = 0
     for story in pivotal_json:
-        if story['id'] in stories.keys():
-            stories[story['id']].name = story['name']
+        if str(story['id']) in stories.keys():
+            stories[str(story['id'])].name = story['name']
             if 'accepted_at' in story.keys():
-                stories[story['id']].points = story['estimate']
+                stories[str(story['id'])].points = story['estimate']
                 total_points += story['estimate']
     return stories, total_points
 
@@ -66,9 +66,10 @@ def parse_toggl(json):
     stories = {}
     for item in json['data'][0]['items']:
         # Does anyone at all care about timecard percision smaller than a second? I don't even.
-        time = item['time'] / 10000
+        time = item['time'] / 1000
         stories[item['title']['time_entry']] = Story(item['title']['time_entry'], time)
-    return stories, json['total_grand']
+    total_time = json['total_grand'] / 1000
+    return stories, total_time
 
 def generate_csv(since, until, stories, total_time, total_points):
     file_name = "Timesheet %(since)s to %(until)s.csv" % {'since': since, 'until': until}
@@ -78,7 +79,6 @@ def generate_csv(since, until, stories, total_time, total_points):
         for s in stories.values():
             description = "[#%(_id)s] %(name)s" % {"_id": s._id, "name": s.name}
             points = s.points or ''
-            print s.time
             m, s = divmod(s.time, 60)
             h, m = divmod(m, 60)
             if h is 0:
