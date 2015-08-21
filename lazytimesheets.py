@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import secrets
 import requests
 from requests.auth import HTTPBasicAuth
