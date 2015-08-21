@@ -39,6 +39,8 @@ def fetch_pivotal(token, project_id, filter_string):
     if r.status_code == 200:
         return r.json()
     else:
+        print(r.status_code)
+        print(r.json())
         raise "Pivotal fetch error"
 
 def fetch_toggl(token, workspace_id, since, until):
