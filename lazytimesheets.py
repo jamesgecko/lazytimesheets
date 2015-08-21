@@ -60,7 +60,7 @@ def parse_pivotal(pivotal_json, stories):
     for story in pivotal_json:
         if str(story['id']) in stories.keys():
             stories[str(story['id'])].name = story['name']
-            if 'accepted_at' in story.keys():
+            if 'accepted_at' in story.keys() and 'estimate' in story:
                 stories[str(story['id'])].points = story['estimate']
                 total_points += story['estimate']
     return stories, total_points
