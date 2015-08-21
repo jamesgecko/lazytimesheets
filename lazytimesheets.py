@@ -25,9 +25,9 @@ def main():
     generate_csv(since, until, stories, total_time, total_points)
 
 def show_help():
-    print "Usage: lazytimesheets [since] [until]"
-    print "Time arguments are of the format YYYY-MM-DD"
-    print "It will generate a csv: `Timesheet YYYY-MM-DD to YYYY-MM-DD.csv`"
+    print("Usage: lazytimesheets [since] [until]")
+    print("Time arguments are of the format YYYY-MM-DD")
+    print("It will generate a csv: `Timesheet YYYY-MM-DD to YYYY-MM-DD.csv`")
 
 def fetch_pivotal(token, project_id, filter_string):
     url = "https://www.pivotaltracker.com/services/v5/projects/%(project_id)s/stories" % {'project_id': project_id}
