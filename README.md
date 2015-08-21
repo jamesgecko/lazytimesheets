@@ -9,6 +9,7 @@ This script correlates Toggl entries with Pivotal Tracker stories.
 It generates a CSV showing how long you spent on each story you've worked on in the designated
 pariod. The estimated point value of completed stories will also be shown.
 The last row of the CSV displays total time and total completed points.
+Times are rounded to the nearest 15 minutes.
 
 Log your work with Toggl. Each "what are you working on?" description must be a story id from
 Pivotal Tracker. Just the number; no spaces or hash-marks or anything else.

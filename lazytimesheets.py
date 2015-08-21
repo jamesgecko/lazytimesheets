@@ -81,16 +81,22 @@ def generate_csv(since, until, stories, total_time, total_points):
             points = s.points or ''
             m, s = divmod(s.time, 60)
             h, m = divmod(m, 60)
-            if h is 0:
-                duration = "%d minutes" % (m)
-            else:
-                duration = "%d hours, %d minutes" % (h,m)
+            h, m = round_to_nearest_quarter(h, m)
+            duration = "%d:%d" % (h,m)
             writer.writerow([description, points, duration])
 
         m, s = divmod(total_time, 60)
         h, m = divmod(m, 60)
-        total_duration = "%d hours, %d minutes" % (h,m)
+        h, m = round_to_nearest_quarter(h, m)
+        total_duration = "%d:%d" % (h,m)
         writer.writerow(["Total", total_points, total_duration])
+
+def round_to_nearest_quarter(h, m):
+    m = 15 * round(float(m)/15)
+    if m == 60:
+        m = 0
+        h += 1
+    return h, m
 
 if __name__ == '__main__':
     main()
